@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Journal</title>
+</head>
+<body>
+  <h1>Welcome, <%= username %>!</h1>
+
+  <form action="/entry" method="POST">
+    <textarea name="content" rows="4" cols="50" placeholder="Write your journal entry..."></textarea>
+    <br />
+    <button type="submit">Save Entry</button>
+  </form>
+    <a href="/logout">Logout</a>
+
+  <h2>Your Entries:</h2>
+<% entries.forEach(entry => { %>
+  <div>
+    <strong><%= entry.timestamp %>:</strong>
+    <p><%= entry.content %></p>
+    
+    <a href="/edit/<%= entry.id %>">Edit</a>
+    
+    <form method="POST" action="/entry/delete/<%= entry.id %>" style="display:inline;">
+      <button type="submit">Delete</button>
+    </form>
+  </div>
+  <hr>
+<% }) %>
+
+
+</body>
+</html>
+

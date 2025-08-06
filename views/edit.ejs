@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Edit Entry</title>
+</head>
+<body>
+  <h1>Edit Entry</h1>
+
+  <form method="POST" action="/edit/<%= entry.id %>">
+    <textarea name="content" rows="5" cols="50"><%= entry.content %></textarea>
+    <br>
+    <button type="submit">Update Entry</button>
+  </form>
+
+  <p><a href="/">Back to Journal</a></p>
+</body>
+</html>
+
