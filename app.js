@@ -1,4 +1,55 @@
+// app.js (portfolio root app)
+const path = require('path');
+const express = require('express');
+const session = require('express-session');
+require('dotenv').config();
 
+const app = express();
+
+// global middleware
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(session({
+  secret: process.env.SESSION_SECRET, // ensure set in .env
+  resave: false,
+  saveUninitialized: true
+}));
+
+// serve static (makes / serve public/index.html automatically)
+app.use(express.static(path.join(__dirname, 'public')));
+
+// views (EJS) for any server-rendered pages you keep using
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
+// mount the journal feature under /journal
+app.use('/journal', require('./routes/journal'));
+
+// homepage (portfolio) — optional explicit route; static already handles this
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Portfolio listening on port ${PORT}`));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 // Allows us to use the express module to make creating the server app faster
 
 const express = require('express');
@@ -300,4 +351,4 @@ app.use(express.static(path.join(__dirname,'public',)));
 
 app.listen(PORT, () => {
     console.log(`Journal app listening on port ${PORT}`)
-});
+}); */
